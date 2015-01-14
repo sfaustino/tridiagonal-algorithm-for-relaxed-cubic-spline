@@ -4,8 +4,7 @@ import java.awt.geom.Point2D;
 import java.util.Vector;
 
 /**
- * Java class for the mathematical treatment for drawing relaxed cubic splines
- * for bezier drawing
+ * Java class for the mathematical treatment for drawing relaxed cubic splines by points interpolation
  * @author Sérgio Faustino
  * @see http://en.wikipedia.org/wiki/Tridiagonal_matrix_algorithm
  * @see http://www.math.ucla.edu/~baker/149.1.02w/handouts/dd_splines.pdf
@@ -38,7 +37,6 @@ public class TridAlgoritm {
 	}
 
 	/**
-	 * Metodo que devolve o tamanho de vetor de pontos
 	 * Method that returns the size of the vector 
 	 * @return Size of vector(Points)
 	 */
@@ -47,7 +45,6 @@ public class TridAlgoritm {
 	}
 
 	/**
-	 * Metodo que devolve o vector de coordenadas x
 	 * Method that returns the x axis coordinates
 	 * @return Vector of x coordinates
 	 */
@@ -57,7 +54,6 @@ public class TridAlgoritm {
 	}
 	
 	/**
-	 * Metodo que define um vetor de coordenadas xx
 	 * Method that sets the x axis coordinates
 	 * @param x_cord - Vector of coordinates
 	 */
@@ -67,7 +63,6 @@ public class TridAlgoritm {
 	}
 
 	/**
-	 * Metodo que devolve o vector de coordenadas Y
 	 * Method that returns the y axis coordinates
 	 * @return Vector of y coordinates
 	 */
@@ -77,7 +72,6 @@ public class TridAlgoritm {
 	}
 
 	/**
-	 * Metodo que define um vetor de coordenadas y
 	 * Method that sets the y axis coordinates
 	 * @param y_cord - Vector of coordinates
 	 */
@@ -97,6 +91,11 @@ public class TridAlgoritm {
 	 */
 	/**
 	 * EN
+	 * This method will create a vector from a coordinate required to calculate the interpolation of the 
+	 * relaxed spline used on the matrix operations.
+	 * [ (6S(1) - S0)  ]
+	 * [ (6S) if i>1   ]
+	 * [ (6S(n-1) - Sn)]
 	 */
 	private Vector<Double> setVector(Vector<Double> vector){
 		Vector<Double> theVector = new Vector<Double>();
@@ -112,12 +111,17 @@ public class TridAlgoritm {
 	}
 		
 	/**
+	 * PT
 	 * Este método efectua a execução do algoritmo Tridiagonal para cada cada cordenada,
-	 * necessário para o cálculo dos pontos de controlo para a relaxed cubic splines 
+	 * necessário para o cálculo dos pontos de controlo para a relaxed b-splines 
 	 * definindo os valores da matriz identidade para b=4 and a=c=1
 	 * | b0 c0  0 |
 	 * | a0 b1 c1 |
 	 * | 0  a1 b2 |
+	 * EN
+	 * This method will execute the Tridiagonal Algorithm for each coordinate using the 
+	 * vector of interpoladed coordinates to calculate the position of the control points
+	 * from each point. 
 	 */
 	private Vector<Double> Tridiagonal(Vector<Double> vector){
 
@@ -166,10 +170,15 @@ public class TridAlgoritm {
 	}
 	
 	/**
+	 * PT
 	 * Este método separa as cordenadas para calculo pelo algoritmo, voltando
 	 * a agrupar em um vetor de pontos já devidamente modificados para uma curva do tipo
 	 * relaxed cubic splines, mantendo a posição do 1º e ultimo ponto do grupo
 	 * @return Vector de pontos de controlo para desenho da forma
+	 * EN
+	 * This method gathers the X and Y coordinates given by the user, calculates the draw points 
+	 * for the bézier using the interpolation of relaxed b-splines and
+	 * transforming it using the Tridiagonal Algorithm, and returns a vector with all points for drawing.
 	 */
 	public Vector<Point2D.Double> controlPoints (){
 		Vector<Point2D.Double> temp = new Vector<Point2D.Double>();
