@@ -97,7 +97,6 @@ public class TridAlgoritm {
 	 */
 	/**
 	 * EN
-	 * This method will create a vector to 
 	 */
 	private Vector<Double> setVector(Vector<Double> vector){
 		Vector<Double> theVector = new Vector<Double>();
